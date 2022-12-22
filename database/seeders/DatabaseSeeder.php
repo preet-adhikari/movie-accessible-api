@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Imports\MoviesImport;
+use App\Jobs\ImportMovies;
 use App\Models\Movie;
 use Illuminate\Database\Seeder;
 use Maatwebsite\Excel\Facades\Excel;
@@ -20,7 +21,8 @@ class DatabaseSeeder extends Seeder
         //Truncate before seeding
         Movie::on()->truncate();
 
-        //Import the data
-        Excel::import(new MoviesImport , storage_path('app/public/files/tmdb_5000_movies.csv'));
+        $this->call(UsersTableSeeder::class);
+        ImportMovies::dispatch();
+
     }
 }

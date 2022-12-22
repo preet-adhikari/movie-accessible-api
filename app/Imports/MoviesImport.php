@@ -6,6 +6,10 @@ use App\Models\Movie;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Imports\HeadingRowFormatter;
+
+
+HeadingRowFormatter::default('none');
 
 class MoviesImport implements ToModel, WithHeadingRow
 {
