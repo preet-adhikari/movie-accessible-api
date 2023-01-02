@@ -28,6 +28,7 @@ Route::post("login", [UserController::class, "login"]);
 
 //Protected Routes
 Route::group(['middleware' => 'auth:sanctum'], function(){
+    Route::get('movies/search/{params}' , [MovieController::class , "search"]);
     Route::resource('movies' , MovieController::class);
     Route::post("logout", [UserController::class, "logout"]);
 });

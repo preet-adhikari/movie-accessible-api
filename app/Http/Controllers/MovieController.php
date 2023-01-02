@@ -85,4 +85,11 @@ class MovieController extends Controller
         $movie->delete();
         return response()->json(null , 204);
     }
+
+    public function search($params)
+    {
+        $movies = Movie::where('title' , 'Like' , '%'.$params . '%' )->get();
+        return response()->json($movies);
+    }
+
 }
