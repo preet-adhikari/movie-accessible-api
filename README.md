@@ -1,64 +1,150 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# An API on movie details.
 
-## About Laravel
+For all the movie connosieurs, this API provides a complete functionality on movies from hollywood from titles to the budget that was invested. This is a TMDB dataset on the movies.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Acknowledgements
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+ - [The Movie Database (TMDB)](https://www.themoviedb.org/)
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Technologies used
 
-### Premium Partners
+Built using MySQL as the Database with Laravel Sanctum as the API authorization and authentication.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
+## API Reference
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+#### Get all movies
 
-## Code of Conduct
+```http
+  GET /api/movies
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+#### Register 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```http
+  POST /api/register/
+```
 
-## License
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | **Required**. Create a name for the user. |
+| `email`      | `email` | **Required**. Create an email for the user. |
+| `password`      | `string` | **Required**. Create a passord for the user. |
+| `password_confirmation`      | `string` | **Required**. Same password as above. |
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+#### Login 
+
+```http
+  POST /api/login/
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `email`      | `email` | **Required**. Email of the user. |
+| `password`      | `string` | **Required**. Password of the user. |
+
+
+#### Registering and logging in returns an API key through which you can access the APIs below:  
+
+#### Search movies
+
+```http
+  POST /api/search/{params}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Api key necessary for verification. |
+| `params`      | `string` | **Required**. Any string to search the movies. |
+
+Returns an array of the movies.
+
+#### Create a movie
+
+```http
+  POST /api/create/
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Api key necessary for verification. |
+| `title`      | `string` | **Required**. Title of the movie. |
+| `original_title`      | `string` | **Required**. Original title of the movie. Could be different from the title. |
+| `release_date`      | `date` | **Required**. Release date of the movie. |
+| `tagline`      | `string` | Tagline of the movie. |
+| `genre`      | `json` | **Required**. 'id' as the genre id and 'name' as the genre name. |
+| `description`      | `string` | **Required**. Title of the movie. |
+
+
+### need to work on create
+
+#### Get a particular movie from its ID.
+
+```http
+  GET /api/movies/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Api key necessary for verification. |
+| `id`      | `integer` | **Required**. ID of the movie. |
+
+Returns the movie: if it exists in the database. 
+
+#### Delete a movie.
+
+```http
+  DELETE /api/movies/{id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `api_key`      | `string` | **Required**. Api key necessary for verification. |
+| `id`      | `integer` | **Required**. ID of the movie. |
+
+Deletes the movie and returns a 204 response. 
+
+
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/preet-adhikari/movie-accessible-api.git
+```
+
+Go to the project directory
+
+```bash
+  cd movie-accessible-api
+```
+
+Generate a new environment key
+
+```bash
+  php artisan generate:key
+```
+
+Run composer update to update dependencies
+
+```bash
+  composer update
+```
+
+
+Start the server
+
+```bash
+  php artisan:serve
+```
+
