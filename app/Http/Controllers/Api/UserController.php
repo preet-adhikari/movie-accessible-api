@@ -38,10 +38,13 @@ class UserController extends Controller
     public function login(Request $request){
         $data = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|string'
+            'password' => 'required'
         ]);
-
+            
         if(Auth::attempt($data)){
+            //Regenerate session
+            // $request->session()->regenerate();
+
             $token = Auth::user()->createToken('movie.token')->plainTextToken;
             return response()->json([
                 "message" => "You have been logged in successfully",
